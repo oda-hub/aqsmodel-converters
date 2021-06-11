@@ -1,0 +1,25 @@
+Metadata-Version: 1.1
+Name: aqschema-converters
+Version: 0.1.0
+Summary: AQSchema Converter
+Home-page: UNKNOWN
+Author: Volodymyr Savchenko, Gabriele Barni
+Author-email: volodymyr.savchenko@unige.ch
+License: BSD 3.0
+Description: UNKNOWN
+Keywords: AQSchema
+Platform: any
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Development Status :: 4 - Beta

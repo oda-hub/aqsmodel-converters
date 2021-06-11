@@ -1,0 +1,3 @@
+calamus>=0.3.8
+gorilla
+numpy
