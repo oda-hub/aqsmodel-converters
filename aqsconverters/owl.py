@@ -10,12 +10,14 @@ oda = owl.get_ontology("http://odahub.io/ontology")
 fno = owl.get_ontology("http://ontology.odahub.io/function.rdf").load()
 fno.base_iri="https://w3id.org/function/ontology#"
 
+renku = owl.get_ontology("https://swissdatasciencecenter.github.io/renku-ontology/")
+
 with oda:
     class Workflow(owl.Thing):
         pass
 
     class AstroqueryModule(owl.Thing):
-        label = "on of the astroquery modules, representing astrophysical services"
+        label = "astroquery module"
 
     class AstrophysicalObject(owl.Thing):
         label = "astrophysical object"
