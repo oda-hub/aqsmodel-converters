@@ -28,6 +28,7 @@ def standardize_types(v):
 def autolog():
     import astroquery
     astroquery.hooked = True
+    print("astrquery.hooked: ", str(getattr(astroquery, 'hooked')))
 
     import astroquery.query
 
