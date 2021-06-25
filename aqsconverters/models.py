@@ -234,6 +234,11 @@ class RunSchema(JsonLDSchema):
     isUsing = fields.Nested(
         AQ_SCHEMA.isUsing, AstroqueryModuleSchema, many=True, flattened=True
     )
+
+    isRequestingAstroObject = fields.Nested(
+        AQ_SCHEMA.isRequestingAstroObject, AstrophysicalObjectSchema, many=True, flattened=True
+    ) # should derive from isUsing
+
     version = fields.String(DC_TERMS.hasVersion)
     name = fields.String(DC_TERMS.title)
 
