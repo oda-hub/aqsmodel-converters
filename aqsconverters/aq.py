@@ -1,12 +1,10 @@
 import gorilla # TODO: use this?
 
 from .models import (
-    Algorithm,
-    Implementation,
+    AstrophysicalObject,
+    AstroqueryModule,
     Run,
     RunSchema,
-    ModelEvaluation,
-    EvaluationMeasure,
 )
 from .common import fn_args_as_params, mls_add_param
 from .io import log_renku_aqs
@@ -41,6 +39,12 @@ def autolog():
 
         run = Run(uuid1())
         
+        aq_module = AstroqueryModule(_id=aq_module_name, name=aq_module_name)
+
+        #run.input_values = [AstrophysicalObject(_id=aq_module_name, name=aq_module_name)]
+        run.isUsing = [aq_module]
+
+        # extra stuff for debug
         run.aq_module_name = aq_module_name
         run.aq_query_type = aq_query_type
         run.aq_args = args
@@ -50,21 +54,21 @@ def autolog():
             RunSchema().dumps(run), str(self.__hash__()), 
             force=True,
             run=run
-        )
-        
+        )        
 
-
+    # aq hook
     def aqs_query_object(self, *args, **kwargs):
         produce_annotation(self, 'query_object', *args, **kwargs)
 
         return object.__getattribute__(self, 'query_object')(*args, **kwargs)
 
+    # aq hook
     def aqs_query_region(self, *args, **kwargs):
         produce_annotation(self, 'query_region', *args, **kwargs)
 
-        return object.__getattribute__(self, 'query_region')(*args, **kwargs)
-        
-        
+        return object.__getattribute__(self, 'query_region')(*args, **kwargs)        
+
+    # hook on aq hook    
     def asq_BaseQuery_getattribute(self, name):
         if name == "query_object":
             return lambda *a, **aa: aqs_query_object(self, *a, **aa)

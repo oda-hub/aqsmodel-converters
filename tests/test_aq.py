@@ -18,10 +18,11 @@ def test_to_aqs():
     astroquery.simbad.Simbad.query_object("Crab")
 
     # this is what users typically run 
-    import astroquery.sdss
-    astroquery.sdss.SDSS.query_region("0 0", radius="0.01 deg")
+    #import astroquery.sdss
+    #astroquery.sdss.SDSS.query_region("0 0", radius="0.01 deg")
 
     # check
     for fn in Path(RENKU_BASE).rglob("*json*"):        
         j = json.load(open(fn))
         print(fn, ": \n", json.dumps(j, sort_keys=True, indent=4))
+

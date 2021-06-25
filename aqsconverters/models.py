@@ -115,14 +115,6 @@ class AlgorithmSchema(JsonLDSchema):
         model = Algorithm
 
 
-class AstroqueryModuleSchema(JsonLDSchema):
-    _id = fields.Id()
-    label = fields.String(RDFS.label)
-
-    class Meta:
-        rdf_type = AQ_SCHEMA.Algorithm
-        model = Algorithm
-
 
 class HyperParameterSetting:
     def __init__(self, value, specified_by, model_hash):
@@ -168,6 +160,54 @@ class ImplementationSchema(JsonLDSchema):
         rdf_type = AQ_SCHEMA.Implementation
         model = Implementation
 
+
+
+class AstrophysicalObject:
+    """Repesent an AstrophysicalObject Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+        
+
+class AstrophysicalObjectSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+    #parameters = fields.Nested(
+    #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
+    #)
+    #implements = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
+    #version = fields.String(DC_TERMS.hasVersion)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstrophysicalObject
+        model = AstrophysicalObject
+
+
+class AstroqueryModule:
+    """Repesent an AstrophysicalObject Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+        
+
+class AstroqueryModuleSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+    #parameters = fields.Nested(
+    #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
+    #)
+    #implements = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
+    #version = fields.String(DC_TERMS.hasVersion)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstroqueryModule
+        model = AstroqueryModule
+
+
+
+
 class Run:
     def __init__(
         self,
@@ -191,14 +231,14 @@ class Run:
 class RunSchema(JsonLDSchema):
     _id = fields.Id()
     executes = fields.Nested(AQ_SCHEMA.executes, ImplementationSchema)
-    input_values = fields.Nested(
-        AQ_SCHEMA.hasInput, HyperParameterSettingSchema, many=True, flattened=True
+    isUsing = fields.Nested(
+        AQ_SCHEMA.isUsing, AstroqueryModuleSchema, many=True, flattened=True
     )
-    output_values = fields.Nested(AQ_SCHEMA.hasOutput, ModelEvaluationSchema, many=True)
-    realizes = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
     version = fields.String(DC_TERMS.hasVersion)
     name = fields.String(DC_TERMS.title)
 
     class Meta:
         rdf_type = AQ_SCHEMA.Run
         model = Run
+
+
