@@ -40,7 +40,7 @@ def autolog():
 
         run_id = uuid1()
         run = Run(_id=run_id,
-                  name="http://odahub.io/ontology#Workflow" + run_id,
+                  name="http://odahub.io/ontology#Workflow" + str(run_id),
                   type="http://odahub.io/ontology#Workflow")
         
         aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name,
