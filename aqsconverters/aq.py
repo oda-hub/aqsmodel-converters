@@ -39,8 +39,8 @@ def autolog():
         print("\033[33mwriting annotation here:\033[0m", aq_module_name, args, kwargs)    
 
         run_id = uuid1()
-        run = Run(_id=run_id,
-                  name="http://odahub.io/ontology#Workflow" + str(run_id),
+        run = Run(_id="http://odahub.io/ontology#Workflow" + str(run_id),
+                  name=str(run_id),
                   type="Workflow")
         
         aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name,
