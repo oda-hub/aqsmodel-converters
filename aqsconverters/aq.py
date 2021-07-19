@@ -38,16 +38,23 @@ def autolog():
         print(f"\033[33mpatched {aq_query_type} with:\033[0m", args, kwargs)    
         print("\033[33mwriting annotation here:\033[0m", aq_module_name, args, kwargs)    
 
-        run = Run(uuid1())
+        run_id = uuid1()
+        run = Run(_id=run_id,
+                  name="http://odahub.io/ontology#Workflow" + run_id,
+                  type="http://odahub.io/ontology#Workflow")
         
-        aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name, name=aq_module_name)
+        aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name,
+                                     name=aq_module_name,
+                                     type="http://odahub.io/ontology#AstroqueryModule")
 
         #run.input_values = [AstrophysicalObject(_id=aq_module_name, name=aq_module_name)]
         run.isUsing = [aq_module]
 
         if aq_query_type == "query_object":
             obj_name = args[0]
-            obj =  AstrophysicalObject(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"), name=obj_name) # normalize id
+            obj =  AstrophysicalObject(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"),
+                                       name=obj_name,
+                                       type="http://odahub.io/ontology#AstrophysicalObject") # normalize id
             run.isRequestingAstroObject = [obj]
 
         # extra stuff for debug

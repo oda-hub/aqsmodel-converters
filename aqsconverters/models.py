@@ -165,14 +165,16 @@ class ImplementationSchema(JsonLDSchema):
 class AstrophysicalObject:
     """Repesent an AstrophysicalObject Schema"""
 
-    def __init__(self, _id, name):
+    def __init__(self, _id, name, type):
         self._id = _id
         self.name = name
-        
+        self.type = type
+
 
 class AstrophysicalObjectSchema(JsonLDSchema):
     _id = fields.Id()
     name = fields.String(DC_TERMS.title)
+    type = fields.String(DC_TERMS.type)
     #parameters = fields.Nested(
     #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
     #)
@@ -187,14 +189,16 @@ class AstrophysicalObjectSchema(JsonLDSchema):
 class AstroqueryModule:
     """Repesent an AstrophysicalObject Schema"""
 
-    def __init__(self, _id, name):
+    def __init__(self, _id, name, type):
         self._id = _id
         self.name = name
+        self.type = type
         
 
 class AstroqueryModuleSchema(JsonLDSchema):
     _id = fields.Id()
     name = fields.String(DC_TERMS.title)
+    type = fields.String(DC_TERMS.type)
     #parameters = fields.Nested(
     #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
     #)
@@ -218,6 +222,7 @@ class Run:
         realizes=None,
         version=None,
         name=None,
+        type=None,
     ):
         self._id = _id
         self.executes = executes
@@ -226,6 +231,7 @@ class Run:
         self.realizes = realizes
         self.version = version
         self.name = name
+        self.type = type
 
 
 class RunSchema(JsonLDSchema):
@@ -241,6 +247,7 @@ class RunSchema(JsonLDSchema):
 
     version = fields.String(DC_TERMS.hasVersion)
     name = fields.String(DC_TERMS.title)
+    type = fields.String(DC_TERMS.type)
 
     class Meta:
         rdf_type = AQ_SCHEMA.Run
