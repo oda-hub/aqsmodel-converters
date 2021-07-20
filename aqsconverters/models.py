@@ -168,13 +168,11 @@ class AstrophysicalObject:
     def __init__(self, _id, name):
         self._id = _id
         self.name = name
-        self.type = type
 
 
 class AstrophysicalObjectSchema(JsonLDSchema):
     _id = fields.Id()
     name = fields.String(DC_TERMS.title)
-    type = fields.String(DC_TERMS.type)
     #parameters = fields.Nested(
     #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
     #)
@@ -192,13 +190,11 @@ class AstroqueryModule:
     def __init__(self, _id, name):
         self._id = _id
         self.name = name
-        self.type = type
         
 
 class AstroqueryModuleSchema(JsonLDSchema):
     _id = fields.Id()
     name = fields.String(DC_TERMS.title)
-    type = fields.String(DC_TERMS.type)
     #parameters = fields.Nested(
     #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
     #)
@@ -230,7 +226,6 @@ class Run:
         self.realizes = realizes
         self.version = version
         self.name = name
-        self.type = type
 
 
 class RunSchema(JsonLDSchema):
@@ -246,7 +241,6 @@ class RunSchema(JsonLDSchema):
 
     version = fields.String(DC_TERMS.hasVersion)
     name = fields.String(DC_TERMS.title)
-    type = fields.String(DC_TERMS.type)
 
     class Meta:
         rdf_type = AQ_SCHEMA.Run
