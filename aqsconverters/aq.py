@@ -40,12 +40,10 @@ def autolog():
 
         run_id = uuid1()
         run = Run(_id=run_id,
-                  name=str(run_id),
-                  type="Workflow")
+                  name=str(run_id))
         
         aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name,
-                                     name=aq_module_name,
-                                     type="AstroqueryModule")
+                                     name=aq_module_name)
 
         #run.input_values = [AstrophysicalObject(_id=aq_module_name, name=aq_module_name)]
         run.isUsing = [aq_module]
@@ -53,8 +51,7 @@ def autolog():
         if aq_query_type == "query_object":
             obj_name = args[0]
             obj =  AstrophysicalObject(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"),
-                                       name=obj_name,
-                                       type="AstrophysicalObject") # normalize id
+                                       name=obj_name) # normalize id
             run.isRequestingAstroObject = [obj]
 
         # extra stuff for debug

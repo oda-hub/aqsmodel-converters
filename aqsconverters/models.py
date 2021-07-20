@@ -165,7 +165,7 @@ class ImplementationSchema(JsonLDSchema):
 class AstrophysicalObject:
     """Repesent an AstrophysicalObject Schema"""
 
-    def __init__(self, _id, name, type):
+    def __init__(self, _id, name):
         self._id = _id
         self.name = name
         self.type = type
@@ -189,7 +189,7 @@ class AstrophysicalObjectSchema(JsonLDSchema):
 class AstroqueryModule:
     """Repesent an AstrophysicalObject Schema"""
 
-    def __init__(self, _id, name, type):
+    def __init__(self, _id, name):
         self._id = _id
         self.name = name
         self.type = type
@@ -222,7 +222,6 @@ class Run:
         realizes=None,
         version=None,
         name=None,
-        type=None,
     ):
         self._id = _id
         self.executes = executes
