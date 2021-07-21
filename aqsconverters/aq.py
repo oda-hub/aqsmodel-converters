@@ -28,6 +28,7 @@ def standardize_types(v):
 def autolog():
     import astroquery
     astroquery.hooked = True
+    print("astrquery.hooked: ", str(getattr(astroquery, 'hooked')))
 
     import astroquery.query
 
@@ -37,16 +38,20 @@ def autolog():
         print(f"\033[33mpatched {aq_query_type} with:\033[0m", args, kwargs)    
         print("\033[33mwriting annotation here:\033[0m", aq_module_name, args, kwargs)    
 
-        run = Run(uuid1())
+        run_id = uuid1()
+        run = Run(_id=run_id,
+                  name=aq_query_type + "_" + str(run_id))
         
-        aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name, name=aq_module_name)
+        aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name,
+                                     name=aq_module_name)
 
         #run.input_values = [AstrophysicalObject(_id=aq_module_name, name=aq_module_name)]
         run.isUsing = [aq_module]
 
         if aq_query_type == "query_object":
             obj_name = args[0]
-            obj =  AstrophysicalObject(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"), name=obj_name) # normalize id
+            obj =  AstrophysicalObject(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"),
+                                       name=obj_name) # normalize id
             run.isRequestingAstroObject = [obj]
 
         # extra stuff for debug
