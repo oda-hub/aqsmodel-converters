@@ -40,7 +40,6 @@ def autolog():
 
         run_id = uuid1()
         run = Run(_id=run_id,
-                  # TODO could the ontology be extended to take into account of the type of query?
                   name=aq_query_type + "_" + str(run_id))
         
         aq_module = AstroqueryModule(_id="https://odahub.io/ontology#AQModule" + aq_module_name,
