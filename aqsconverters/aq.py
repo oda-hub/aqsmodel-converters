@@ -2,7 +2,10 @@ import gorilla # TODO: use this?
 
 from .models import (
     AstrophysicalObject,
+    AstrophysicalRegion,
     AstroqueryModule,
+    SkyCoordinates,
+    Angle,
     Run,
     RunSchema,
 )
@@ -53,6 +56,13 @@ def autolog():
             obj =  AstrophysicalObject(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"),
                                        name=obj_name) # normalize id
             run.isRequestingAstroObject = [obj]
+
+        # TODO capture also query_region ?
+        if aq_query_type == "query_region":
+            region_name = args[0]
+            region =  AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion" + region_name.replace(" ","_"),
+                                       name=region_name) # normalize id
+            run.isRequestingRegion = [region]
 
         # extra stuff for debug
         run.aq_module_name = aq_module_name

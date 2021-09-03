@@ -184,6 +184,29 @@ class AstrophysicalObjectSchema(JsonLDSchema):
         model = AstrophysicalObject
 
 
+class AstrophysicalRegion:
+    """Repesent an AstrophysicalObject Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class AstrophysicalRegionSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+    #parameters = fields.Nested(
+    #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
+    #)
+    #implements = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
+    #version = fields.String(DC_TERMS.hasVersion)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstrophysicalObject
+        model = AstrophysicalRegion
+
+
+
 class AstroqueryModule:
     """Repesent an AstrophysicalObject Schema"""
 
@@ -206,6 +229,38 @@ class AstroqueryModuleSchema(JsonLDSchema):
         model = AstroqueryModule
 
 
+class SkyCoordinates:
+    """Repesent a SkyCoordinates Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class SkyCoordinatesSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.SkyCoordinates
+        model = SkyCoordinates
+
+
+class Angle:
+    """Repesent a SkyCoordinates Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class AngleSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Angle
+        model = Angle
 
 
 class Run:
@@ -237,7 +292,11 @@ class RunSchema(JsonLDSchema):
 
     isRequestingAstroObject = fields.Nested(
         AQ_SCHEMA.isRequestingAstroObject, AstrophysicalObjectSchema, many=True, flattened=True
-    ) # should derive from isUsing
+    )
+
+    isRequestingRegion = fields.Nested(
+        AQ_SCHEMA.isRequestingRegion, AstrophysicalRegionSchema, many=True, flattened=True
+    )
 
     version = fields.String(DC_TERMS.hasVersion)
     name = fields.String(DC_TERMS.title)
