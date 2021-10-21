@@ -77,8 +77,10 @@ def autolog():
             radius_obj = Angle(_id="https://odahub.io/ontology#Angle" + repr(radius).replace(" ","_"),
                            name=repr(radius))
 
-            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"),
-                                       name=obj_name)
+            astro_region_name = radius_obj.name + " " + skycoord_obj.name
+            # definition of the astro region
+            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion" + astro_region_name.replace(" ","_"),
+                                       name=astro_region_name)
             astro_region_obj.isUsingSkyCoordinates = skycoord_obj
             astro_region_obj.isUsingRadius = radius_obj
 
