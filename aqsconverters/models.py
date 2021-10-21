@@ -161,7 +161,6 @@ class ImplementationSchema(JsonLDSchema):
         model = Implementation
 
 
-
 class AstrophysicalObject:
     """Repesent an AstrophysicalObject Schema"""
 
@@ -182,29 +181,6 @@ class AstrophysicalObjectSchema(JsonLDSchema):
     class Meta:
         rdf_type = AQ_SCHEMA.AstrophysicalObject
         model = AstrophysicalObject
-
-
-class AstrophysicalRegion:
-    """Repesent an AstrophysicalObject Schema"""
-
-    def __init__(self, _id, name):
-        self._id = _id
-        self.name = name
-
-
-class AstrophysicalRegionSchema(JsonLDSchema):
-    _id = fields.Id()
-    name = fields.String(DC_TERMS.title)
-    #parameters = fields.Nested(
-    #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
-    #)
-    #implements = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
-    #version = fields.String(DC_TERMS.hasVersion)
-
-    class Meta:
-        rdf_type = AQ_SCHEMA.AstrophysicalObject
-        model = AstrophysicalRegion
-
 
 
 class AstroqueryModule:
@@ -263,6 +239,28 @@ class AngleSchema(JsonLDSchema):
         model = Angle
 
 
+class AstrophysicalRegion:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class AstrophysicalRegionSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    isUsingSkyCoordinates = fields.Nested(
+        AQ_SCHEMA.isUsingSkyCoordinates, SkyCoordinatesSchema, many=True, flattened=True
+    )
+    isUsingRadius = fields.Nested(
+        AQ_SCHEMA.isUsingRadius, AngleSchema, many=True, flattened=True
+    )
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstrophysicalRegion
+        model = AstrophysicalRegion
+
+
 class Run:
     def __init__(
         self,
@@ -294,8 +292,8 @@ class RunSchema(JsonLDSchema):
         AQ_SCHEMA.isRequestingAstroObject, AstrophysicalObjectSchema, many=True, flattened=True
     )
 
-    isRequestingRegion = fields.Nested(
-        AQ_SCHEMA.isRequestingRegion, AstrophysicalRegionSchema, many=True, flattened=True
+    isRequestingAstroRegion = fields.Nested(
+        AQ_SCHEMA.isRequestingAstroRegion, AstrophysicalRegionSchema, many=True, flattened=True
     )
 
     version = fields.String(DC_TERMS.hasVersion)

@@ -59,10 +59,30 @@ def autolog():
 
         # TODO capture also query_region ?
         if aq_query_type == "query_region":
-            region_name = args[0]
-            region =  AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion" + region_name.replace(" ","_"),
-                                       name=region_name) # normalize id
-            run.isRequestingRegion = [region]
+            if 'source' in kwargs:
+                coordinates = kwargs['source']
+            else:
+                coordinates = args[0]
+
+            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates" + repr(coordinates).replace(" ","_"),
+                           name=repr(coordinates))
+
+            radius = None
+            if 'radius' in kwargs:
+                radius = kwargs['radius']
+            else:
+                if args[1] is not None:
+                    radius = args[1]
+
+            radius_obj = Angle(_id="https://odahub.io/ontology#Angle" + repr(radius).replace(" ","_"),
+                           name=repr(radius))
+
+            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"),
+                                       name=obj_name)
+            astro_region_obj.isUsingSkyCoordinates = skycoord_obj
+            astro_region_obj.isUsingRadius = radius_obj
+
+            run.isRequestingAstroRegion = [astro_region_obj]
 
         # extra stuff for debug
         run.aq_module_name = aq_module_name
