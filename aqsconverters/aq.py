@@ -64,7 +64,8 @@ def autolog():
             else:
                 coordinates = args[0]
 
-            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates" + repr(coordinates).replace(" ","_"),
+            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates"
+                                              + repr(coordinates).replace(" ","_").replace(" ","_").replace("<", "").replace(">", ""),
                            name=repr(coordinates))
 
             radius = None
@@ -74,15 +75,17 @@ def autolog():
                 if args[1] is not None:
                     radius = args[1]
 
-            radius_obj = Angle(_id="https://odahub.io/ontology#Angle" + repr(radius).replace(" ","_"),
+            radius_obj = Angle(_id="https://odahub.io/ontology#Angle"
+                                   + repr(radius).replace(" ", "_").replace("<", "").replace(">", ""),
                            name=repr(radius))
 
             astro_region_name = radius_obj.name + " " + skycoord_obj.name
             # definition of the astro region
-            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion" + astro_region_name.replace(" ","_"),
+            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion"
+                                                       + astro_region_name.replace(" ","_").replace("<", "").replace(">", ""),
                                        name=astro_region_name)
-            astro_region_obj.isUsingSkyCoordinates = skycoord_obj
-            astro_region_obj.isUsingRadius = radius_obj
+            astro_region_obj.isUsingSkyCoordinates = [skycoord_obj]
+            astro_region_obj.isUsingRadius = [radius_obj]
 
             run.isRequestingAstroRegion = [astro_region_obj]
 
