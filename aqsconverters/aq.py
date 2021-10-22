@@ -65,7 +65,7 @@ def autolog():
             else:
                 coordinates = args[0]
 
-            skycoord_obj_id_suffix = hashlib.sha256(repr(coordinates).encode()).hexdigest()
+            skycoord_obj_id_suffix = hashlib.sha256(coordinates.to_string().encode()).hexdigest()
             print("skycoord_obj_id_suffix: ", skycoord_obj_id_suffix)
             skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
                                               + skycoord_obj_id_suffix,
@@ -78,14 +78,14 @@ def autolog():
                 if args[1] is not None:
                     radius = args[1]
 
-            radius_obj_id_suffix = hashlib.sha256(repr(radius).encode()).hexdigest()
+            radius_obj_id_suffix = hashlib.sha256(radius.to_string().encode()).hexdigest()
             print("radius_obj_id_suffix: ", radius_obj_id_suffix)
             radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
                                    + radius_obj_id_suffix,
                                name=repr(radius))
 
             astro_region_name = radius_obj.name + " " + skycoord_obj.name
-            astro_region_suffix = hashlib.sha256((repr(radius) + "_" + repr(coordinates)).encode()).hexdigest()
+            astro_region_suffix = hashlib.sha256((radius.to_string() + "_" + coordinates.to_string()).encode()).hexdigest()
             # definition of the astro region
             astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion/"
                                                        + astro_region_suffix,
