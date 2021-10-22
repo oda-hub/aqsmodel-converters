@@ -34,6 +34,7 @@ def autolog():
     print("astrquery.hooked: ", str(getattr(astroquery, 'hooked')))
 
     import astroquery.query
+    import hashlib
 
     def produce_annotation(self, aq_query_type, *args, **kwargs):
         aq_module_name = self.__class__.__name__    
@@ -64,9 +65,11 @@ def autolog():
             else:
                 coordinates = args[0]
 
-            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates"
-                                              + repr(coordinates).replace(" ","_").replace(" ","_").replace("<", "").replace(">", ""),
-                           name=repr(coordinates))
+            skycoord_obj_id_suffix = hashlib.sha256(repr(coordinates).encode()).hexdigest()
+            print("skycoord_obj_id_suffix: ", skycoord_obj_id_suffix)
+            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
+                                              + skycoord_obj_id_suffix,
+                                          name=repr(coordinates))
 
             radius = None
             if 'radius' in kwargs:
@@ -75,14 +78,17 @@ def autolog():
                 if args[1] is not None:
                     radius = args[1]
 
-            radius_obj = Angle(_id="https://odahub.io/ontology#Angle"
-                                   + repr(radius).replace(" ", "_").replace("<", "").replace(">", ""),
-                           name=repr(radius))
+            radius_obj_id_suffix = hashlib.sha256(repr(radius).encode()).hexdigest()
+            print("radius_obj_id_suffix: ", radius_obj_id_suffix)
+            radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
+                                   + radius_obj_id_suffix,
+                               name=repr(radius))
 
             astro_region_name = radius_obj.name + " " + skycoord_obj.name
+            astro_region_suffix = skycoord_obj_id_suffix + "_" + radius_obj_id_suffix
             # definition of the astro region
-            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion"
-                                                       + astro_region_name.replace(" ","_").replace("<", "").replace(">", ""),
+            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion/"
+                                                       + astro_region_suffix,
                                        name=astro_region_name)
             astro_region_obj.isUsingSkyCoordinates = [skycoord_obj]
             astro_region_obj.isUsingRadius = [radius_obj]
