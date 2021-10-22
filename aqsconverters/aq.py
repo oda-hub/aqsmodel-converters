@@ -85,7 +85,7 @@ def autolog():
                                name=repr(radius))
 
             astro_region_name = radius_obj.name + " " + skycoord_obj.name
-            astro_region_suffix = skycoord_obj_id_suffix + "_" + radius_obj_id_suffix
+            astro_region_suffix = hashlib.sha256((repr(radius) + "_" + repr(coordinates)).encode()).hexdigest()
             # definition of the astro region
             astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion/"
                                                        + astro_region_suffix,
