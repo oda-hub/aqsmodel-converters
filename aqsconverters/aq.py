@@ -69,7 +69,7 @@ def autolog():
             print("skycoord_obj_id_suffix: ", skycoord_obj_id_suffix)
             skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
                                               + skycoord_obj_id_suffix,
-                                          name=repr(coordinates))
+                                          name=coordinates.to_string())
 
             radius = None
             if 'radius' in kwargs:
@@ -82,7 +82,7 @@ def autolog():
             print("radius_obj_id_suffix: ", radius_obj_id_suffix)
             radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
                                    + radius_obj_id_suffix,
-                               name=repr(radius))
+                               name=radius.to_string())
 
             astro_region_name = radius_obj.name + " " + skycoord_obj.name
             astro_region_suffix = hashlib.sha256((radius.to_string() + "_" + coordinates.to_string()).encode()).hexdigest()
