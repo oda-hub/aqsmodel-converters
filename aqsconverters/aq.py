@@ -52,18 +52,23 @@ def autolog():
         #run.input_values = [AstrophysicalObject(_id=aq_module_name, name=aq_module_name)]
         run.isUsing = [aq_module]
 
+        # if aq_query_type == "get_images":
+        #
+        #     run.isRequestingAstroImages = [obj]
         if aq_query_type == "query_object":
             obj_name = args[0]
             obj =  AstrophysicalObject(_id="https://odahub.io/ontology#AstroObject" + obj_name.replace(" ","_"),
                                        name=obj_name) # normalize id
             run.isRequestingAstroObject = [obj]
 
-        # TODO capture also query_region ?
         if aq_query_type == "query_region":
-            if 'source' in kwargs:
-                coordinates = kwargs['source']
+            if 'coordinates' in kwargs:
+                coordinates = kwargs['coordinates']
             else:
                 coordinates = args[0]
+
+            print("args: ", args)
+            print("kwargs: ", kwargs)
 
             skycoord_obj_id_suffix = hashlib.sha256(coordinates.to_string().encode()).hexdigest()
             print("skycoord_obj_id_suffix: ", skycoord_obj_id_suffix)
@@ -117,7 +122,13 @@ def autolog():
     def aqs_query_region(self, *args, **kwargs):
         produce_annotation(self, 'query_region', *args, **kwargs)
 
-        return object.__getattribute__(self, 'query_region')(*args, **kwargs)        
+        return object.__getattribute__(self, 'query_region')(*args, **kwargs)
+
+        # aq hook
+    def aqs_get_images(self, *args, **kwargs):
+        produce_annotation(self, 'get_images', *args, **kwargs)
+
+        return object.__getattribute__(self, 'get_images')(*args, **kwargs)
 
     # hook on aq hook    
     def asq_BaseQuery_getattribute(self, name):
@@ -126,6 +137,9 @@ def autolog():
 
         if name == "query_region":
             return lambda *a, **aa: aqs_query_region(self, *a, **aa)
+
+        if name == "get_images":
+            return lambda *a, **aa: aqs_get_images(self, *a, **aa)
 
         #print("\033[33mpatching BaseQuery_getattr!\033[0m", name)
         return object.__getattribute__(self, name)
