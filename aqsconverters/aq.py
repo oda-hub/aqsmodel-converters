@@ -36,6 +36,7 @@ def autolog():
     print("astrquery.hooked: ", str(getattr(astroquery, 'hooked')))
 
     import astroquery.query
+    from astropy.coordinates import SkyCoord, Angle
     import hashlib
 
     def produce_annotation(self, aq_query_type, *args, **kwargs):
@@ -59,29 +60,36 @@ def autolog():
             astro_image_suffix = ""
 
             # coordinates
+            skycoord_obj = None
             if 'coordinates' in kwargs:
                 coordinates = kwargs['coordinates']
-            else:
-                coordinates = args[0]
-
-            skycoord_obj_id_suffix = hashlib.sha256(coordinates.to_string().encode()).hexdigest()
-            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
-                                                  + skycoord_obj_id_suffix,
-                                              name=coordinates.to_string())
-            astro_image_name += skycoord_obj.name
-            astro_image_suffix += coordinates.to_string()
+                if coordinates is not None:
+                    if isinstance(coordinates, SkyCoord):
+                        skycoord_obj_id_suffix = hashlib.sha256(coordinates.to_string().encode()).hexdigest()
+                        astro_image_suffix += coordinates.to_string()
+                    else:
+                        skycoord_obj_id_suffix = hashlib.sha256(str(coordinates).encode()).hexdigest()
+                        astro_image_suffix += str(coordinates)
+                    skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
+                                                          + skycoord_obj_id_suffix,
+                                                      name=coordinates.to_string())
+                    astro_image_name += skycoord_obj.name
 
             # radius
             radius_obj = None
             if 'radius' in kwargs:
                 radius = kwargs['radius']
                 if radius is not None:
-                    radius_obj_id_suffix = hashlib.sha256(radius.to_string().encode()).hexdigest()
+                    if isinstance(radius, Angle):
+                        radius_obj_id_suffix = hashlib.sha256(radius.to_string().encode()).hexdigest()
+                        astro_image_suffix += '_' + radius.to_string()
+                    else:
+                        radius_obj_id_suffix = hashlib.sha256(str(radius).encode()).hexdigest()
+                        astro_image_suffix += str(radius)
                     radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
                                                + radius_obj_id_suffix,
                                            name=radius.to_string())
                     astro_image_name += '_' + radius_obj.name
-                    astro_image_suffix += '_' + radius.to_string()
 
             # pixels
             pixels_obj = None
