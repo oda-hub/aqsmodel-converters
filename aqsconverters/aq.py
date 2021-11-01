@@ -151,17 +151,17 @@ def autolog():
                                               + skycoord_obj_id_suffix,
                                           name=coordinates_arg.to_string())
 
-            radius = None
+            radius_arg = None
             if 'radius' in kwargs:
-                radius = kwargs['radius']
-            if radius is not None:
-                radius_obj_id_suffix = hashlib.sha256(radius.to_string().encode()).hexdigest()
+                radius_arg = kwargs['radius']
+            if radius_arg is not None:
+                radius_obj_id_suffix = hashlib.sha256(radius_arg.to_string().encode()).hexdigest()
                 radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
                                        + radius_obj_id_suffix,
-                                   name=radius.to_string())
+                                   name=radius_arg.to_string())
 
             astro_region_name = radius_obj.name + " " + skycoord_obj.name
-            astro_region_suffix = hashlib.sha256((radius.to_string() + "_" + coordinates.to_string()).encode()).hexdigest()
+            astro_region_suffix = hashlib.sha256((radius_arg.to_string() + "_" + coordinates_arg.to_string()).encode()).hexdigest()
             # definition of the astro region
             astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion/"
                                                        + astro_region_suffix,
