@@ -354,7 +354,7 @@ class RunSchema(JsonLDSchema):
     )
 
     isRequestingAstroImage = fields.Nested(
-        AQ_SCHEMA.isRequestingAstroImnage, AstrophysicalImageSchema, many=True, flattened=True
+        AQ_SCHEMA.isRequestingAstroImage, AstrophysicalImageSchema, many=True, flattened=True
     )
 
     version = fields.String(DC_TERMS.hasVersion)
