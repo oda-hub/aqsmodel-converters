@@ -250,8 +250,8 @@ class PixelsSchema(JsonLDSchema):
     name = fields.String(DC_TERMS.title)
 
     class Meta:
-        rdf_type = AQ_SCHEMA.Angle
-        model = Angle
+        rdf_type = AQ_SCHEMA.Pixels
+        model = Pixels
 
 
 class ImageBand:
@@ -266,8 +266,8 @@ class ImageBandSchema(JsonLDSchema):
     name = fields.String(DC_TERMS.title)
 
     class Meta:
-        rdf_type = AQ_SCHEMA.Angle
-        model = Angle
+        rdf_type = AQ_SCHEMA.ImageBand
+        model = ImageBand
 
 
 class AstrophysicalRegion:
