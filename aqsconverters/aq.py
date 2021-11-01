@@ -65,30 +65,30 @@ def autolog():
                 coordinates_arg = kwargs['coordinates']
                 if coordinates_arg is not None:
                     if isinstance(coordinates_arg, coordinates.SkyCoord):
-                        skycoord_obj_id_suffix = hashlib.sha256(coordinates_arg.to_string().encode()).hexdigest()
-                        astro_image_suffix += coordinates_arg.to_string()
+                        coordinates_arg_str = coordinates_arg.to_string()
                     else:
-                        skycoord_obj_id_suffix = hashlib.sha256(str(coordinates_arg).encode()).hexdigest()
-                        astro_image_suffix += str(coordinates_arg)
+                        coordinates_arg_str = str(coordinates_arg)
+                    skycoord_obj_id_suffix = hashlib.sha256(coordinates_arg_str.encode()).hexdigest()
+                    astro_image_suffix += coordinates_arg_str
                     skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
-                                                          + skycoord_obj_id_suffix,
-                                                      name=coordinates_arg.to_string())
+                                                      + skycoord_obj_id_suffix,
+                                                  name=coordinates_arg_str)
                     astro_image_name += skycoord_obj.name
 
             # radius
             radius_obj = None
             if 'radius' in kwargs:
-                radius = kwargs['radius']
-                if radius is not None:
-                    if isinstance(radius, coordinates.Angle):
-                        radius_obj_id_suffix = hashlib.sha256(radius.to_string().encode()).hexdigest()
-                        astro_image_suffix += '_' + radius.to_string()
+                radius_arg = kwargs['radius']
+                if radius_arg is not None:
+                    if isinstance(radius_arg, coordinates.Angle):
+                        radius_arg_str = radius_arg.to_string()
                     else:
-                        radius_obj_id_suffix = hashlib.sha256(str(radius).encode()).hexdigest()
-                        astro_image_suffix += str(radius)
+                        radius_arg_str = str(radius_arg)
+                    radius_obj_id_suffix = hashlib.sha256(radius_arg_str.encode()).hexdigest()
+                    astro_image_suffix += '_' + radius_arg_str
                     radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
-                                               + radius_obj_id_suffix,
-                                           name=radius.to_string())
+                                           + radius_obj_id_suffix,
+                                       name=radius_arg_str)
                     astro_image_name += '_' + radius_obj.name
 
             # pixels
@@ -142,14 +142,14 @@ def autolog():
 
         if aq_query_type == "query_region":
             if 'coordinates' in kwargs:
-                coordinates = kwargs['coordinates']
+                coordinates_arg = kwargs['coordinates']
             else:
-                coordinates = args[0]
+                coordinates_arg = args[0]
 
-            skycoord_obj_id_suffix = hashlib.sha256(coordinates.to_string().encode()).hexdigest()
+            skycoord_obj_id_suffix = hashlib.sha256(coordinates_arg.to_string().encode()).hexdigest()
             skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
                                               + skycoord_obj_id_suffix,
-                                          name=coordinates.to_string())
+                                          name=coordinates_arg.to_string())
 
             radius = None
             if 'radius' in kwargs:
