@@ -62,17 +62,17 @@ def autolog():
             # coordinates
             skycoord_obj = None
             if 'coordinates' in kwargs:
-                coordinates = kwargs['coordinates']
-                if coordinates is not None:
-                    if isinstance(coordinates, coordinates.SkyCoord):
-                        skycoord_obj_id_suffix = hashlib.sha256(coordinates.to_string().encode()).hexdigest()
-                        astro_image_suffix += coordinates.to_string()
+                coordinates_arg = kwargs['coordinates']
+                if coordinates_arg is not None:
+                    if isinstance(coordinates_arg, coordinates.SkyCoord):
+                        skycoord_obj_id_suffix = hashlib.sha256(coordinates_arg.to_string().encode()).hexdigest()
+                        astro_image_suffix += coordinates_arg.to_string()
                     else:
-                        skycoord_obj_id_suffix = hashlib.sha256(str(coordinates).encode()).hexdigest()
-                        astro_image_suffix += str(coordinates)
+                        skycoord_obj_id_suffix = hashlib.sha256(str(coordinates_arg).encode()).hexdigest()
+                        astro_image_suffix += str(coordinates_arg)
                     skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
                                                           + skycoord_obj_id_suffix,
-                                                      name=coordinates.to_string())
+                                                      name=coordinates_arg.to_string())
                     astro_image_name += skycoord_obj.name
 
             # radius
