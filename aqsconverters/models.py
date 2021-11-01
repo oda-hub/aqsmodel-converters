@@ -310,10 +310,8 @@ class AstrophysicalImageSchema(JsonLDSchema):
         AQ_SCHEMA.isUsingPixels, PixelsSchema, many=True, flattened=True
     )
     isUsingImageBand = fields.Nested(
-        AQ_SCHEMA.isUsingRadius, ImageBandSchema, many=True, flattened=True
+        AQ_SCHEMA.isUsingImageBand, ImageBandSchema, many=True, flattened=True
     )
-
-
 
     class Meta:
         rdf_type = AQ_SCHEMA.AstrophysicalImage
