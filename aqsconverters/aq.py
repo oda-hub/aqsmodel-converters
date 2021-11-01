@@ -88,24 +88,24 @@ def autolog():
             if 'pixels' in kwargs:
                 pixels = kwargs['pixels']
                 if pixels is not None:
-                    pixels_obj_id_suffix = hashlib.sha256(pixels.to_string().encode()).hexdigest()
+                    pixels_obj_id_suffix = hashlib.sha256(str(pixels).encode()).hexdigest()
                     pixels_obj = Pixels(_id="https://odahub.io/ontology#Pixels/"
                                            + pixels_obj_id_suffix,
-                                       name=pixels.to_string())
+                                       name=str(pixels))
                     astro_image_name += '_' + pixels_obj.name
-                    astro_image_suffix += '_' + pixels.to_string()
+                    astro_image_suffix += '_' + str(pixels)
 
             # image_band
             image_band_obj = None
             if 'image_band' in kwargs:
                 image_band = kwargs['image_band']
                 if image_band is not None:
-                    image_band_obj_id_suffix = hashlib.sha256(image_band.to_string().encode()).hexdigest()
+                    image_band_obj_id_suffix = hashlib.sha256(image_band.encode()).hexdigest()
                     image_band_obj = Pixels(_id="https://odahub.io/ontology#ImageBand/"
                                            + image_band_obj_id_suffix,
-                                       name=image_band.to_string())
+                                       name=image_band)
                     astro_image_name += '_' + image_band_obj.name
-                    astro_image_suffix += '_' + image_band.to_string()
+                    astro_image_suffix += '_' + image_band
 
             astro_image_suffix = hashlib.sha256(astro_image_suffix.encode()).hexdigest()
 
