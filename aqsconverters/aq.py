@@ -36,7 +36,7 @@ def autolog():
     print("astrquery.hooked: ", str(getattr(astroquery, 'hooked')))
 
     import astroquery.query
-    from astropy.coordinates import SkyCoord, Angle
+    from astropy import coordinates
     import hashlib
 
     def produce_annotation(self, aq_query_type, *args, **kwargs):
@@ -64,7 +64,7 @@ def autolog():
             if 'coordinates' in kwargs:
                 coordinates = kwargs['coordinates']
                 if coordinates is not None:
-                    if isinstance(coordinates, SkyCoord):
+                    if isinstance(coordinates, coordinates.SkyCoord):
                         skycoord_obj_id_suffix = hashlib.sha256(coordinates.to_string().encode()).hexdigest()
                         astro_image_suffix += coordinates.to_string()
                     else:
@@ -80,7 +80,7 @@ def autolog():
             if 'radius' in kwargs:
                 radius = kwargs['radius']
                 if radius is not None:
-                    if isinstance(radius, Angle):
+                    if isinstance(radius, coordinates.Angle):
                         radius_obj_id_suffix = hashlib.sha256(radius.to_string().encode()).hexdigest()
                         astro_image_suffix += '_' + radius.to_string()
                     else:
