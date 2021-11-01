@@ -69,7 +69,7 @@ def autolog():
                                                   + skycoord_obj_id_suffix,
                                               name=coordinates.to_string())
             astro_image_name += skycoord_obj.name
-            astro_image_suffix += skycoord_obj.to_string()
+            astro_image_suffix += coordinates.to_string()
 
             # radius
             radius_obj = None
@@ -81,7 +81,7 @@ def autolog():
                                                + radius_obj_id_suffix,
                                            name=radius.to_string())
                     astro_image_name += '_' + radius_obj.name
-                    astro_image_suffix += '_' + radius_obj.to_string()
+                    astro_image_suffix += '_' + radius.to_string()
 
             # pixels
             pixels_obj = None
@@ -93,7 +93,7 @@ def autolog():
                                            + pixels_obj_id_suffix,
                                        name=pixels.to_string())
                     astro_image_name += '_' + pixels_obj.name
-                    astro_image_suffix += '_' + pixels_obj.to_string()
+                    astro_image_suffix += '_' + pixels.to_string()
 
             # image_band
             image_band_obj = None
@@ -105,7 +105,7 @@ def autolog():
                                            + image_band_obj_id_suffix,
                                        name=image_band.to_string())
                     astro_image_name += '_' + image_band_obj.name
-                    astro_image_suffix += '_' + image_band_obj.to_string()
+                    astro_image_suffix += '_' + image_band.to_string()
 
             astro_image_suffix = hashlib.sha256(astro_image_suffix.encode()).hexdigest()
 
