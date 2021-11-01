@@ -132,7 +132,7 @@ def autolog():
             if pixels_obj is not None:
                 astro_image_obj.isUsingPixels = [pixels_obj]
 
-            run.isRequestingAstroImages = [astro_image_obj]
+            run.isRequestingAstroImage = [astro_image_obj]
 
         if aq_query_type == "query_object":
             obj_name = args[0]
