@@ -223,7 +223,6 @@ class SkyCoordinatesSchema(JsonLDSchema):
 
 
 class Angle:
-    """Repesent a SkyCoordinates Schema"""
 
     def __init__(self, _id, name):
         self._id = _id
@@ -231,6 +230,38 @@ class Angle:
 
 
 class AngleSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Angle
+        model = Angle
+
+
+class Pixels:
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class PixelsSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Angle
+        model = Angle
+
+
+class ImageBand:
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class ImageBandSchema(JsonLDSchema):
     _id = fields.Id()
     name = fields.String(DC_TERMS.title)
 
@@ -259,6 +290,34 @@ class AstrophysicalRegionSchema(JsonLDSchema):
     class Meta:
         rdf_type = AQ_SCHEMA.AstrophysicalRegion
         model = AstrophysicalRegion
+
+class AstrophysicalImage:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+class AstrophysicalImageSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    isUsingSkyCoordinates = fields.Nested(
+        AQ_SCHEMA.isUsingSkyCoordinates, SkyCoordinatesSchema, many=True, flattened=True
+    )
+    isUsingRadius = fields.Nested(
+        AQ_SCHEMA.isUsingRadius, AngleSchema, many=True, flattened=True
+    )
+    isUsingPixels = fields.Nested(
+        AQ_SCHEMA.isUsingPixels, PixelsSchema, many=True, flattened=True
+    )
+    isUsingImageBand = fields.Nested(
+        AQ_SCHEMA.isUsingRadius, ImageBandSchema, many=True, flattened=True
+    )
+
+
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstrophysicalImage
+        model = AstrophysicalImage
 
 
 class Run:
@@ -294,6 +353,10 @@ class RunSchema(JsonLDSchema):
 
     isRequestingAstroRegion = fields.Nested(
         AQ_SCHEMA.isRequestingAstroRegion, AstrophysicalRegionSchema, many=True, flattened=True
+    )
+
+    isRequestingAstroImage = fields.Nested(
+        AQ_SCHEMA.isRequestingAstroImnage, AstrophysicalImageSchema, many=True, flattened=True
     )
 
     version = fields.String(DC_TERMS.hasVersion)
