@@ -70,7 +70,7 @@ def autolog():
                         coordinates_arg_str = str(coordinates_arg)
                     skycoord_obj_id_suffix = hashlib.sha256(coordinates_arg_str.encode()).hexdigest()
                     astro_image_suffix += coordinates_arg_str
-                    skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
+                    skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates"
                                                       + skycoord_obj_id_suffix,
                                                   name=coordinates_arg_str)
                     astro_image_name += skycoord_obj.name
@@ -86,7 +86,7 @@ def autolog():
                         radius_arg_str = str(radius_arg)
                     radius_obj_id_suffix = hashlib.sha256(radius_arg_str.encode()).hexdigest()
                     astro_image_suffix += '_' + radius_arg_str
-                    radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
+                    radius_obj = Angle(_id="https://odahub.io/ontology#Angle"
                                            + radius_obj_id_suffix,
                                        name=radius_arg_str)
                     astro_image_name += '_' + radius_obj.name
@@ -97,7 +97,7 @@ def autolog():
                 pixels = kwargs['pixels']
                 if pixels is not None:
                     pixels_obj_id_suffix = hashlib.sha256(str(pixels).encode()).hexdigest()
-                    pixels_obj = Pixels(_id="https://odahub.io/ontology#Pixels/"
+                    pixels_obj = Pixels(_id="https://odahub.io/ontology#Pixels"
                                            + pixels_obj_id_suffix,
                                        name=str(pixels))
                     astro_image_name += '_' + pixels_obj.name
@@ -109,7 +109,7 @@ def autolog():
                 image_band = kwargs['image_band']
                 if image_band is not None:
                     image_band_obj_id_suffix = hashlib.sha256(image_band.encode()).hexdigest()
-                    image_band_obj = Pixels(_id="https://odahub.io/ontology#ImageBand/"
+                    image_band_obj = Pixels(_id="https://odahub.io/ontology#ImageBand"
                                            + image_band_obj_id_suffix,
                                        name=image_band)
                     astro_image_name += '_' + image_band_obj.name
@@ -117,7 +117,7 @@ def autolog():
 
             astro_image_suffix = hashlib.sha256(astro_image_suffix.encode()).hexdigest()
 
-            astro_image_obj = AstrophysicalImage(_id="https://odahub.io/ontology#AstroImage/"
+            astro_image_obj = AstrophysicalImage(_id="https://odahub.io/ontology#AstroImage"
                                                        + astro_image_suffix,
                                                  name=astro_image_name)
 
@@ -147,7 +147,7 @@ def autolog():
                 coordinates_arg = args[0]
 
             skycoord_obj_id_suffix = hashlib.sha256(coordinates_arg.to_string().encode()).hexdigest()
-            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates/"
+            skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates"
                                               + skycoord_obj_id_suffix,
                                           name=coordinates_arg.to_string())
 
@@ -156,14 +156,14 @@ def autolog():
                 radius_arg = kwargs['radius']
             if radius_arg is not None:
                 radius_obj_id_suffix = hashlib.sha256(radius_arg.to_string().encode()).hexdigest()
-                radius_obj = Angle(_id="https://odahub.io/ontology#Angle/"
+                radius_obj = Angle(_id="https://odahub.io/ontology#Angle"
                                        + radius_obj_id_suffix,
                                    name=radius_arg.to_string())
 
             astro_region_name = radius_obj.name + " " + skycoord_obj.name
             astro_region_suffix = hashlib.sha256((radius_arg.to_string() + "_" + coordinates_arg.to_string()).encode()).hexdigest()
             # definition of the astro region
-            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion/"
+            astro_region_obj = AstrophysicalRegion(_id="https://odahub.io/ontology#AstroRegion"
                                                        + astro_region_suffix,
                                        name=astro_region_name)
             astro_region_obj.isUsingSkyCoordinates = [skycoord_obj]
