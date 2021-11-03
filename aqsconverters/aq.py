@@ -70,10 +70,10 @@ def autolog():
                         position_arg_str = position_arg.to_string()
                     else:
                         position_arg_str = str(position_arg)
-                    skycoord_obj_id_suffix = hashlib.sha256(position_arg_str.encode()).hexdigest()
+                    position_obj_id_suffix = hashlib.sha256(position_arg_str.encode()).hexdigest()
                     astro_image_suffix += position_arg_str
                     position_obj = Position(_id="https://odahub.io/ontology#Position"
-                                                + skycoord_obj_id_suffix,
+                                                + position_obj_id_suffix,
                                             name=position_arg_str)
                     astro_image_name += position_obj.name
 
