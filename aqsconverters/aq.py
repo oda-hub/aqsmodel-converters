@@ -143,7 +143,7 @@ def autolog():
                 astro_image_obj.isUsingPosition = [position_obj]
 
             if coordinates_obj is not None:
-                astro_image_obj.isUsingSkyCoordinates = [coordinates_obj]
+                astro_image_obj.isUsingCoordinates = [coordinates_obj]
 
             if radius_obj is not None:
                 astro_image_obj.isUsingRadius = [radius_obj]
