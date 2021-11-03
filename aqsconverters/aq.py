@@ -6,6 +6,8 @@ from .models import (
     AstrophysicalImage,
     AstroqueryModule,
     SkyCoordinates,
+    Coordinates,
+    Position,
     Angle,
     Pixels,
     Run,
@@ -59,8 +61,24 @@ def autolog():
             astro_image_name = ""
             astro_image_suffix = ""
 
+            # position
+            position_obj = None
+            if 'position' in kwargs:
+                position_arg = kwargs['coordinates']
+                if position_arg is not None:
+                    if isinstance(position_arg, coordinates.SkyCoord):
+                        position_arg_str = position_arg.to_string()
+                    else:
+                        position_arg_str = str(position_arg)
+                    skycoord_obj_id_suffix = hashlib.sha256(position_arg_str.encode()).hexdigest()
+                    astro_image_suffix += position_arg_str
+                    position_obj = Position(_id="https://odahub.io/ontology#Position"
+                                                + skycoord_obj_id_suffix,
+                                            name=position_arg_str)
+                    astro_image_name += position_obj.name
+
             # coordinates
-            skycoord_obj = None
+            coordinates_obj = None
             if 'coordinates' in kwargs:
                 coordinates_arg = kwargs['coordinates']
                 if coordinates_arg is not None:
@@ -68,12 +86,12 @@ def autolog():
                         coordinates_arg_str = coordinates_arg.to_string()
                     else:
                         coordinates_arg_str = str(coordinates_arg)
-                    skycoord_obj_id_suffix = hashlib.sha256(coordinates_arg_str.encode()).hexdigest()
+                    coordinates_obj_obj_id_suffix = hashlib.sha256(coordinates_arg_str.encode()).hexdigest()
                     astro_image_suffix += coordinates_arg_str
-                    skycoord_obj = SkyCoordinates(_id="https://odahub.io/ontology#SkyCoordinates"
-                                                      + skycoord_obj_id_suffix,
+                    coordinates_obj = Coordinates(_id="https://odahub.io/ontology#Coordinates"
+                                                      + coordinates_obj_obj_id_suffix,
                                                   name=coordinates_arg_str)
-                    astro_image_name += skycoord_obj.name
+                    astro_image_name += coordinates_obj.name
 
             # radius
             radius_obj = None
@@ -118,10 +136,14 @@ def autolog():
             astro_image_suffix = hashlib.sha256(astro_image_suffix.encode()).hexdigest()
 
             astro_image_obj = AstrophysicalImage(_id="https://odahub.io/ontology#AstroImage"
-                                                       + astro_image_suffix,
+                                                     + astro_image_suffix,
                                                  name=astro_image_name)
 
-            astro_image_obj.isUsingSkyCoordinates = [skycoord_obj]
+            if position_obj is not None:
+                astro_image_obj.isUsingPosition = [position_obj]
+
+            if coordinates_obj is not None:
+                astro_image_obj.isUsingSkyCoordinates = [coordinates_obj]
 
             if radius_obj is not None:
                 astro_image_obj.isUsingRadius = [radius_obj]

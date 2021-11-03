@@ -222,6 +222,36 @@ class SkyCoordinatesSchema(JsonLDSchema):
         model = SkyCoordinates
 
 
+class Coordinates:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class CoordinatesSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Coordinates
+        model = Coordinates
+
+
+class Position:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class PositionSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Position
+        model = Position
+
+
 class Angle:
 
     def __init__(self, _id, name):
@@ -291,17 +321,22 @@ class AstrophysicalRegionSchema(JsonLDSchema):
         rdf_type = AQ_SCHEMA.AstrophysicalRegion
         model = AstrophysicalRegion
 
+
 class AstrophysicalImage:
     def __init__(self, _id, name):
         self._id = _id
         self.name = name
 
+
 class AstrophysicalImageSchema(JsonLDSchema):
     _id = fields.Id()
     name = fields.String(DC_TERMS.title)
 
-    isUsingSkyCoordinates = fields.Nested(
-        AQ_SCHEMA.isUsingSkyCoordinates, SkyCoordinatesSchema, many=True, flattened=True
+    isUsingPosition = fields.Nested(
+        AQ_SCHEMA.isUsingPosition, PositionSchema, many=True, flattened=True
+    )
+    isUsingCoordinates = fields.Nested(
+        AQ_SCHEMA.isUsingCoordinates, CoordinatesSchema, many=True, flattened=True
     )
     isUsingRadius = fields.Nested(
         AQ_SCHEMA.isUsingRadius, AngleSchema, many=True, flattened=True
