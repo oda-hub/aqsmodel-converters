@@ -64,7 +64,7 @@ def autolog():
             # position
             position_obj = None
             if 'position' in kwargs:
-                position_arg = kwargs['coordinates']
+                position_arg = kwargs['position']
                 if position_arg is not None:
                     if isinstance(position_arg, coordinates.SkyCoord):
                         position_arg_str = position_arg.to_string()
