@@ -8,6 +8,7 @@ from .models import (
     SkyCoordinates,
     Angle,
     Pixels,
+    ImageBand,
     Run,
     RunSchema,
 )
@@ -109,7 +110,7 @@ def autolog():
                 image_band = kwargs['image_band']
                 if image_band is not None:
                     image_band_obj_id_suffix = hashlib.sha256(image_band.encode()).hexdigest()
-                    image_band_obj = Pixels(_id="https://odahub.io/ontology#ImageBand"
+                    image_band_obj = ImageBand(_id="https://odahub.io/ontology#ImageBand"
                                            + image_band_obj_id_suffix,
                                        name=image_band)
                     astro_image_name += '_' + image_band_obj.name
@@ -178,7 +179,7 @@ def autolog():
         run.aq_kwargs = kwargs
 
         log_renku_aqs(
-            RunSchema().dumps(run), str(self.__hash__()), 
+            RunSchema().dumps(run), str(run_id),
             force=True,
             run=run
         )        
