@@ -23,11 +23,16 @@ with oda:
     class AstroqueryModule(owl.Thing):
         label = "astroquery module"
 
+    class AstrophysicalRegion(owl.Thing):
+        label = "astrophysical region"
 
     class AstrophysicalObject(owl.Thing):
         label = "astrophysical object"
 
     class SkyCoordinates(owl.Thing):
+        pass
+
+    class Angle(owl.Thing):
         pass
 
     #class moduleRepresents(owl.ObjectProperty):
@@ -49,6 +54,8 @@ with oda:
     class isRequestingAstroObject(isRequestingParameter):
         range    = [AstrophysicalObject]
 
+    class isRequestingAstroRegion(isRequestingParameter):
+        range    = [AstrophysicalRegion]
 
 @click.group("owl")
 def cli():

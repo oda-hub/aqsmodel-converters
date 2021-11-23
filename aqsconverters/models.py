@@ -115,14 +115,6 @@ class AlgorithmSchema(JsonLDSchema):
         model = Algorithm
 
 
-class AstroqueryModuleSchema(JsonLDSchema):
-    _id = fields.Id()
-    label = fields.String(RDFS.label)
-
-    class Meta:
-        rdf_type = AQ_SCHEMA.Algorithm
-        model = Algorithm
-
 
 class HyperParameterSetting:
     def __init__(self, value, specified_by, model_hash):
@@ -168,6 +160,199 @@ class ImplementationSchema(JsonLDSchema):
         rdf_type = AQ_SCHEMA.Implementation
         model = Implementation
 
+
+class AstrophysicalObject:
+    """Repesent an AstrophysicalObject Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class AstrophysicalObjectSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+    #parameters = fields.Nested(
+    #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
+    #)
+    #implements = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
+    #version = fields.String(DC_TERMS.hasVersion)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstrophysicalObject
+        model = AstrophysicalObject
+
+
+class AstroqueryModule:
+    """Repesent an AstrophysicalObject Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+        
+
+class AstroqueryModuleSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+    #parameters = fields.Nested(
+    #    AQ_SCHEMA.hasHyperParameter, HyperParameterSchema, many=True
+    #)
+    #implements = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
+    #version = fields.String(DC_TERMS.hasVersion)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstroqueryModule
+        model = AstroqueryModule
+
+
+class SkyCoordinates:
+    """Repesent a SkyCoordinates Schema"""
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class SkyCoordinatesSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.SkyCoordinates
+        model = SkyCoordinates
+
+
+class Coordinates:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class CoordinatesSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Coordinates
+        model = Coordinates
+
+
+class Position:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class PositionSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Position
+        model = Position
+
+
+class Angle:
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class AngleSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Angle
+        model = Angle
+
+
+class Pixels:
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class PixelsSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.Pixels
+        model = Pixels
+
+
+class ImageBand:
+
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class ImageBandSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.ImageBand
+        model = ImageBand
+
+
+class AstrophysicalRegion:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class AstrophysicalRegionSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    isUsingSkyCoordinates = fields.Nested(
+        AQ_SCHEMA.isUsingSkyCoordinates, SkyCoordinatesSchema, many=True, flattened=True
+    )
+    isUsingRadius = fields.Nested(
+        AQ_SCHEMA.isUsingRadius, AngleSchema, many=True, flattened=True
+    )
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstrophysicalRegion
+        model = AstrophysicalRegion
+
+
+class AstrophysicalImage:
+    def __init__(self, _id, name):
+        self._id = _id
+        self.name = name
+
+
+class AstrophysicalImageSchema(JsonLDSchema):
+    _id = fields.Id()
+    name = fields.String(DC_TERMS.title)
+
+    isUsingPosition = fields.Nested(
+        AQ_SCHEMA.isUsingPosition, PositionSchema, many=True, flattened=True
+    )
+    isUsingCoordinates = fields.Nested(
+        AQ_SCHEMA.isUsingCoordinates, CoordinatesSchema, many=True, flattened=True
+    )
+    isUsingRadius = fields.Nested(
+        AQ_SCHEMA.isUsingRadius, AngleSchema, many=True, flattened=True
+    )
+    isUsingPixels = fields.Nested(
+        AQ_SCHEMA.isUsingPixels, PixelsSchema, many=True, flattened=True
+    )
+    isUsingImageBand = fields.Nested(
+        AQ_SCHEMA.isUsingImageBand, ImageBandSchema, many=True, flattened=True
+    )
+
+    class Meta:
+        rdf_type = AQ_SCHEMA.AstrophysicalImage
+        model = AstrophysicalImage
+
+
 class Run:
     def __init__(
         self,
@@ -191,14 +376,27 @@ class Run:
 class RunSchema(JsonLDSchema):
     _id = fields.Id()
     executes = fields.Nested(AQ_SCHEMA.executes, ImplementationSchema)
-    input_values = fields.Nested(
-        AQ_SCHEMA.hasInput, HyperParameterSettingSchema, many=True, flattened=True
+    isUsing = fields.Nested(
+        AQ_SCHEMA.isUsing, AstroqueryModuleSchema, many=True, flattened=True
     )
-    output_values = fields.Nested(AQ_SCHEMA.hasOutput, ModelEvaluationSchema, many=True)
-    realizes = fields.Nested(AQ_SCHEMA.implements, AlgorithmSchema)
+
+    isRequestingAstroObject = fields.Nested(
+        AQ_SCHEMA.isRequestingAstroObject, AstrophysicalObjectSchema, many=True, flattened=True
+    )
+
+    isRequestingAstroRegion = fields.Nested(
+        AQ_SCHEMA.isRequestingAstroRegion, AstrophysicalRegionSchema, many=True, flattened=True
+    )
+
+    isRequestingAstroImage = fields.Nested(
+        AQ_SCHEMA.isRequestingAstroImage, AstrophysicalImageSchema, many=True, flattened=True
+    )
+
     version = fields.String(DC_TERMS.hasVersion)
     name = fields.String(DC_TERMS.title)
 
     class Meta:
         rdf_type = AQ_SCHEMA.Run
         model = Run
+
+
