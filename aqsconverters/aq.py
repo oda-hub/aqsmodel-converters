@@ -46,6 +46,7 @@ def autolog():
         print(f"\033[33mpatched {aq_query_type} with:\033[0m", args, kwargs)    
         print("\033[33mwriting annotation here:\033[0m", aq_module_name, args, kwargs)    
 
+        # TODO there is a new run for each produce_annotation i.e. for each separate query_object, to keep in mind if it is ok with renku
         run_id = uuid1()
         run = Run(_id=run_id,
                   name=aq_query_type + "_" + str(run_id))
