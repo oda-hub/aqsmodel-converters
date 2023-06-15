@@ -19,7 +19,7 @@ def log_oda_annotation(oda_annotation, hash, force=False):
         # hence NOP
         return
 
-    path = Path(os.path.join(renku_project_root, ODA_ANNOTATION_DIR, COMMON_DIR))
+    path = Path(renku_project_root, ODA_ANNOTATION_DIR, COMMON_DIR)
     if not path.exists():
         path.mkdir(parents=True)
 
