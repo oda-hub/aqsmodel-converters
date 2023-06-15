@@ -14,7 +14,7 @@ from .models import (
     Run,
     RunSchema,
 )
-from .io import log_oda_annotation
+from .io import log_aqs_annotation
 from uuid import uuid1
 
 
@@ -197,7 +197,7 @@ def autolog():
         run.aq_args = args
         run.aq_kwargs = kwargs
 
-        log_oda_annotation(
+        log_aqs_annotation(
             RunSchema().dumps(run),
             str(run_id),
             force=True
