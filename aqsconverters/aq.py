@@ -14,12 +14,8 @@ from .models import (
     Run,
     RunSchema,
 )
-from .common import fn_args_as_params, mls_add_param
-from .io import log_renku_aqs
-from distutils.version import LooseVersion
+from .io import log_aqs_annotation
 from uuid import uuid1
-import random
-import json
 
 
 def standardize_types(v):
@@ -201,10 +197,10 @@ def autolog():
         run.aq_args = args
         run.aq_kwargs = kwargs
 
-        log_renku_aqs(
-            RunSchema().dumps(run), str(run_id),
-            force=True,
-            run=run
+        log_aqs_annotation(
+            RunSchema().dumps(run),
+            str(run_id),
+            force=True
         )        
 
     # aq hook
