@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-ODA_ANNOTATION_DIR = "aqs"
+AQS_ANNOTATION_DIR = "aq"
 ENV_RENKU_HOME = "RENKU_HOME"
 COMMON_DIR = "latest"
 
@@ -19,7 +19,7 @@ def log_aqs_annotation(oda_annotation, hash, force=False):
         # hence NOP
         return
 
-    path = Path(renku_project_root, ODA_ANNOTATION_DIR, COMMON_DIR)
+    path = Path(renku_project_root, AQS_ANNOTATION_DIR, COMMON_DIR)
     if not path.exists():
         path.mkdir(parents=True)
 
