@@ -1,12 +1,12 @@
 import os
 from pathlib import Path
 
-ODA_ANNOTATION_DIR = "oda"
+ODA_ANNOTATION_DIR = "aqs"
 ENV_RENKU_HOME = "RENKU_HOME"
 COMMON_DIR = "latest"
 
 
-def log_oda_annotation(oda_annotation, hash, force=False):
+def log_aqs_annotation(oda_annotation, hash, force=False):
     print(f"\033[32mlog_renku_aqs\033[0m {oda_annotation, hash}")
 
     if ENV_RENKU_HOME in os.environ:
