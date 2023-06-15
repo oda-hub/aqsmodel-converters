@@ -24,7 +24,7 @@ def log_oda_annotation(oda_annotation, hash, force=False):
         path.mkdir(parents=True)
 
     # this is the way
-    jsonld_path = path / (hash + ".jsonld")
+    jsonld_path = path.joinpath(hash + ".jsonld")
     with jsonld_path.open(mode="w") as f:
         print("writing", jsonld_path)
         f.write(oda_annotation)
